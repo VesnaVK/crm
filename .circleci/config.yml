@@ -1,7 +1,6 @@
 version: 2
 jobs:
     build:
-        working_directory: ~/crm
         docker:
             - image: circleci/php:7.2.6-apache-stretch-node-browsers
                 environment:
@@ -11,20 +10,32 @@ jobs:
                 environment:
                     MYSQL_ROOT_PASSWORD: 'root'
                     MYSQL_DATABASE: crm
+
+        working_directory: ~/crm
+
         steps:
             - checkout
+
             - run:
                 name: Install PHP MySQL
                 command: sudo docker-php-ext-install pdo_mysql
+
             - run:
                 name: Wait for MySQL
                 command: dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
+
             - run:
                 name: Update Composer
                 command: sudo bin/composer.phar self-update
+
             - run:
                 name: Composer install
                 command: bin/composer.phar install -n --prefer-dist
+
+            # - run:
+            #     name: Run migrations
+            #     command: php bin/console doctrine:migrations:migrate --env=test --no-interaction
+
             - run:
-                name: Run migrations
-                command: php bin/console doctrine:migrations:migrate --env=test --no-interaction
+                name: Unit tests
+                command: phpunit
