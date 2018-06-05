@@ -34,12 +34,12 @@ jobs:
           key: v1-dependencies-{{ checksum "composer.json" }}
 
       - run:
-          name: Install PHP MySQL
-          command: sudo docker-php-ext-install pdo_mysql
+          name: Install and enable zip for phpunit
+          command: sudo apt-get install -y zlib1g-dev
 
       - run:
-          name: Install and enable zip for phpunit
-          command: sudo docker-php-ext-install zip
+          name: Install PHP MySQL
+          command: sudo docker-php-ext-install pdo_mysql
 
       - run:
           name: Wait for MySQL
@@ -59,4 +59,4 @@ jobs:
 #
       - run:
           name: Unit tests
-          command: bin/phpunit
+          command: ./bin/phpunit
