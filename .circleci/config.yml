@@ -55,4 +55,4 @@ jobs:
 #
       - run:
           name: Unit tests
-          command: phpunit
+          command: bin/phpunit
