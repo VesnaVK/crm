@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/php:7.2.6-apache-stretch-node-browsers
+      - image: circleci/php:7.2-apache-stretch-node-browsers
         environment:
           APP_ENV: test
           DATABASE_URL: mysql://root:root@178.128.159.56:3306/crm
