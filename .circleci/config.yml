@@ -47,7 +47,7 @@ jobs:
 
       - run:
           name: Composer install
-          command: sudo composer install -n --prefer-dist
+          command: composer install -n --prefer-dist
 
 #             # - run:
 #             #     name: Run migrations
