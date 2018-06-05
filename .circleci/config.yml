@@ -28,31 +28,31 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: bin/composer.phar install -n --prefer-dist
-
       - save_cache:
           paths:
             - ./vendor
           key: v1-dependencies-{{ checksum "composer.json" }}
-#                 name: Install PHP MySQL
-#                 command: sudo docker-php-ext-install pdo_mysql
 
       - run:
-        name: Wait for MySQL
-        command: dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
+          name: Install PHP MySQL
+          command: sudo docker-php-ext-install pdo_mysql
 
       - run:
-        name: Update Composer
-        command: sudo bin/composer.phar self-update
+          name: Wait for MySQL
+          command: dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
 
       - run:
-        name: Composer install
-        command: bin/composer.phar install -n --prefer-dist
+          name: Update Composer
+          command: sudo bin/composer.phar self-update
+
+      - run:
+          name: Composer install
+          command: bin/composer.phar install -n --prefer-dist
 
 #             # - run:
 #             #     name: Run migrations
 #             #     command: php bin/console doctrine:migrations:migrate --env=test --no-interaction
 #
       - run:
-        name: Unit tests
-        command: phpunit
+          name: Unit tests
+          command: phpunit
