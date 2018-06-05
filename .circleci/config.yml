@@ -38,6 +38,10 @@ jobs:
           command: sudo docker-php-ext-install pdo_mysql
 
       - run:
+          name: Install and enable zip for phpunit
+          command: sudo docker-php-ext-install zip
+
+      - run:
           name: Wait for MySQL
           command: dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
 
