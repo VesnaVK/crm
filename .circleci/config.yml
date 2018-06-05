@@ -8,11 +8,13 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/php:7.2.6-apache-stretch-node-browsers
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      - image: circleci/mysql:9.4
+        environment:
+          APP_ENV: test
+          DATABASE_URL: mysql://root:root@178.128.159.56:3306/crm
+      - image: circleci/mysql:5.7
+        environment:
+          MYSQL_ROOT_PASSWORD: 'root'
+          MYSQL_DATABASE: crm
 
     working_directory: ~/crm
 
@@ -32,49 +34,25 @@ jobs:
           paths:
             - ./vendor
           key: v1-dependencies-{{ checksum "composer.json" }}
-
-      # run tests!
-      - run: phpunit
-#
-#
-# version: 2
-# jobs:
-#     build:
-#         docker:
-#             - image: circleci/php:7.2.6-apache-stretch-node-browsers
-#                 environment:
-#                     APP_ENV: test
-#                     DATABASE_URL: mysql://root:root@178.128.159.56:3306/crm
-#             - image: circleci/mysql:5.7
-#                 environment:
-#                     MYSQL_ROOT_PASSWORD: 'root'
-#                     MYSQL_DATABASE: crm
-#
-#         working_directory: ~/crm
-#
-#         steps:
-#             - checkout
-#
-#             - run:
 #                 name: Install PHP MySQL
 #                 command: sudo docker-php-ext-install pdo_mysql
-#
-#             - run:
-#                 name: Wait for MySQL
-#                 command: dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
-#
-#             - run:
-#                 name: Update Composer
-#                 command: sudo bin/composer.phar self-update
-#
-#             - run:
-#                 name: Composer install
-#                 command: bin/composer.phar install -n --prefer-dist
-#
+
+      - run:
+        name: Wait for MySQL
+        command: dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
+
+      - run:
+        name: Update Composer
+        command: sudo bin/composer.phar self-update
+
+      - run:
+        name: Composer install
+        command: bin/composer.phar install -n --prefer-dist
+
 #             # - run:
 #             #     name: Run migrations
 #             #     command: php bin/console doctrine:migrations:migrate --env=test --no-interaction
 #
-#             - run:
-#                 name: Unit tests
-#                 command: phpunit
+      - run:
+        name: Unit tests
+        command: phpunit
