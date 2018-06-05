@@ -38,12 +38,8 @@ jobs:
           command: sudo docker-php-ext-install pdo_mysql
 
       - run:
-          name: Update repositories
-          command: sudo apt update
-
-      - run:
           name: Install and enable zip for phpunit
-          command: sudo apt install -y zlib1g-dev && docker-php-ext-install zip
+          command: sudo docker-php-ext-install zip
 
       - run:
           name: Wait for MySQL
