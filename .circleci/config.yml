@@ -43,11 +43,11 @@ jobs:
 
       - run:
           name: Update Composer
-          command: sudo bin/composer.phar self-update
+          command: sudo composer self-update
 
       - run:
           name: Composer install
-          command: bin/composer.phar install -n --prefer-dist
+          command: sudo composer install -n --prefer-dist
 
 #             # - run:
 #             #     name: Run migrations
