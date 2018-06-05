@@ -58,7 +58,7 @@
         "symfony/polyfill-php71": "*",
         "symfony/polyfill-php70": "*",
         "symfony/polyfill-php56": "*"
-    },,
+    },
         "symfony/test-pack": "^1.0",
     "scripts": {
         "auto-scripts": {
