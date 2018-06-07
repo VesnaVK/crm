@@ -41,6 +41,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Update Composer
+          command: sudo composer self-update
+      - run:
           name: Composer install
           command: composer install -n --prefer-dist
       - run:
@@ -60,7 +63,7 @@ jobs:
           command: rsync -vzcrSLhp --exclude '.env' --delete ~/crm/ $DROPLET_USER@$DROPLET_IP:/var/www/crm_current
       - run:
           name: Post-deploy
-          command: ssh -T $DROPLET_USER:$DROPLET_IP < bin/deploy/pre-deploy.sh
+          command: ssh -T $DROPLET_USER:$DROPLET_IP < bin/deploy/deploy.sh
 workflows:
   version: 2
   build-and-deploy:
