@@ -45,7 +45,7 @@ jobs:
           command: composer install -n --prefer-dist
       - run:
           name: Clear cache
-          command: composer bin/console cache:clear --env=prod --no-interaction
+          command: php bin/console cache:clear --env=prod --no-interaction
       - run:
           name: Yarn
           command: yarn install && yarn run encore production
