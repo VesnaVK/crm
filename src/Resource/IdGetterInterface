@@ -1,0 +1,17 @@
+<?php
+
+namespace App\Resource;
+
+interface IdGetter
+{
+    /**
+     * Gets the ID of the resource whose name is provided.
+     *
+     * @param string $name
+     *
+     * @return int
+     *
+     * @throws \Exception
+     */
+    public function getIdByName(string $name): ?int
+}
